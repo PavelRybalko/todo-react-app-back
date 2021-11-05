@@ -1,5 +1,6 @@
 const { Router } = require('express');
 const { check, validationResult } = require('express-validator');
+require('dotenv').config();
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
@@ -68,7 +69,7 @@ router.post(
         return res.status(400).json({ message: 'Invalid password' });
       }
 
-      const jwtSecret = 'sdfgsdklgj54kjsfjk33jk';
+      const jwtSecret = process.env.JWT_SECRET_KEY;
       const token = jwt.sign({ userId: user.id }, jwtSecret, {
         expiresIn: '1h',
       });
